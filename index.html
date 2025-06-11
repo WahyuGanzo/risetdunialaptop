@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login AdeRa</title>
+    <link rel="shortcut icon" href="logo dl.png" type="image/x-icon">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Latar belakang gradien lembut, terinspirasi dari MacOS */
+            background: linear-gradient(135deg, #E0F2F7 0%, #D1F0F0 100%); /* Biru muda ke cyan muda */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1rem;
+            color: #333; /* Warna teks default */
+        }
+        .login-container {
+            backdrop-filter: blur(25px); /* Efek blur yang lebih kuat untuk 'glassmorphism' */
+            background-color: rgba(255, 255, 255, 0.9); /* Sedikit lebih opaque */
+            border: 1px solid rgba(255, 255, 255, 0.5); /* Border yang lebih jelas, efek kaca */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08); /* Bayangan yang lebih halus */
+            transform: translateY(0);
+            animation: fadeInScale 0.7s ease-out forwards; /* Animasi saat dimuat */
+            max-width: 440px; /* Lebar maksimal yang lebih fokus */
+            width: 100%;
+            display: flex;
+            flex-direction: column; /* Memastikan tata letak kolom */
+            align-items: center; /* Memusatkan konten */
+        }
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        input {
+            border: 1px solid #E0E0E0; /* Border input yang sangat tipis */
+            background-color: #F8F8F8; /* Background input yang sedikit abu-abu */
+            transition: all 0.2s ease-in-out;
+        }
+        input:focus {
+            outline: none;
+            border-color: #6366F1; /* Warna border saat fokus */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); /* Focus ring yang lebih halus */
+            background-color: #FFFFFF; /* Warna putih saat fokus */
+        }
+        .login-button {
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            background-image: linear-gradient(to right, #6366F1, #8B5CF6); /* Gradien pada tombol */
+            font-weight: 600; /* Font yang sedikit lebih tebal untuk tombol */
+        }
+        .login-button:hover {
+            opacity: 0.95; /* Sedikit transparan saat hover */
+            transform: translateY(-1px); /* Sedikit naik saat hover */
+            box-shadow: 0 7px 15px rgba(99, 102, 241, 0.25); /* Bayangan saat hover */
+        }
+        .login-button:active {
+            transform: translateY(0); /* Kembali ke posisi semula saat diklik */
+            box-shadow: 0 3px 8px rgba(99, 102, 241, 0.2); /* Bayangan lebih kecil saat aktif */
+        }
+        /* Kelas .gemini-button telah dihapus */
+        #messageBox {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+        #messageBox.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8">
+    <div class="login-container rounded-3xl p-8 md:p-12">
+        <!-- Bagian Logo -->
+        <div class="flex justify-center mb-8">
+            <img src="logo dl.png"
+                 alt="Logo Aplikasi"
+                 class="w-32 h-32 object-contain rounded-full shadow-lg"
+                 onerror="this.onerror=null; this.src='https://placehold.co/120x120/BDD0FF/ffffff?text=LOGO';">
+        </div>
+
+        <h1 class="text-4xl md:text-5xl font-extrabold text-center text-gray-900 mb-4 leading-tight">Selamat Datang</h1>
+        <p class="text-gray-600 text-lg text-center mb-8">Masuk untuk melanjutkan</p>
+
+        <form id="loginForm" class="w-full space-y-6">
+            <div>
+                <label for="username" class="block text-gray-700 text-base font-medium mb-2">Nama Pengguna</label>
+                <input type="text" id="username" name="username"
+                       class="w-full p-3 rounded-lg focus:outline-none focus:ring-transparent"
+                       placeholder="Masukkan nama pengguna" required>
+            </div>
+            <div>
+                <label for="password" class="block text-gray-700 text-base font-medium mb-2">Kata Sandi</label>
+                <input type="password" id="password" name="password"
+                       class="w-full p-3 rounded-lg focus:outline-none focus:ring-transparent"
+                       placeholder="Masukkan kata sandi" required>
+            </div>
+            <button type="submit"
+                    class="login-button w-full text-white py-3 rounded-lg text-lg">
+                Login
+            </button>
+        </form>
+
+        <!-- Area Pesan -->
+        <div id="messageBox" class="mt-6 p-4 rounded-lg text-center text-md hidden font-medium"></div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const messageBox = document.getElementById('messageBox');
+
+        // Fungsi untuk menampilkan pesan di messageBox
+        function displayMessage(text, type) { // Parameter 'button' dihapus
+            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'border-red-400', 'bg-green-100', 'text-green-700', 'border-green-400', 'bg-blue-100', 'text-blue-700', 'border-blue-400');
+            messageBox.innerHTML = ''; // Bersihkan konten sebelumnya
+            
+            // Tambahkan kelas CSS berdasarkan tipe pesan
+            if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-700', 'border-green-400', 'border');
+            } else if (type === 'error') {
+                messageBox.classList.add('bg-red-100', 'text-red-700', 'border-red-400', 'border');
+            } else if (type === 'info') { // 'info' type tetap ada jika sewaktu-waktu dibutuhkan
+                messageBox.classList.add('bg-blue-100', 'text-blue-700', 'border-blue-400', 'border');
+            }
+
+            const messageText = document.createElement('p');
+            messageText.textContent = text;
+            messageBox.appendChild(messageText);
+
+            // Animasi fade-in
+            messageBox.classList.remove('show');
+            messageBox.classList.add('hidden');
+            setTimeout(() => {
+                messageBox.classList.remove('hidden');
+                messageBox.classList.add('show');
+            }, 50);
+        }
+
+        // Fungsi untuk memanggil Gemini API telah dihapus
+
+        // Event listener untuk submit form
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const usernameInput = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password').value;
+
+            const correctUsername = "aderahman123";
+            const correctPassword = "aderahman123";
+
+            if (usernameInput === correctUsername && passwordInput === correctPassword) {
+                displayMessage('Login berhasil! Mengarahkan ke dashboard...', 'success');
+                // Alihkan ke dashboard.html setelah 1 detik (untuk memberi waktu pesan terlihat)
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000); // 1000 milidetik = 1 detik
+            } else {
+                displayMessage('Nama pengguna atau kata sandi salah. Silakan coba lagi.', 'error');
+            }
+        });
+    </script>
+</body>
+</html>
