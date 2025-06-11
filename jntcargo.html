@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Input Data Pengiriman</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container {
+            max-width: 100%;
+            padding: 1.5rem;
+        }
+        .form-input {
+            @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+        }
+        .btn {
+            @apply px-4 py-2 rounded-md font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2;
+        }
+        .btn-primary {
+            @apply bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
+        }
+        .btn-secondary {
+            @apply bg-green-600 hover:bg-green-700 focus:ring-green-500;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #e2e8f0; /* Light gray for table headers */
+            font-weight: 600;
+        }
+        tr:hover {
+            background-color: #f9fafb; /* Lighter hover effect */
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto p-4 md:p-8 bg-white shadow-lg rounded-xl my-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Formulir Input Data Pengiriman</h1>
+        <p class="text-center text-gray-600 mb-8">Isi formulir di bawah ini untuk menambahkan data pengiriman. Anda dapat mengunduh data dalam format CSV.</p>
+
+        <!-- Formulir Input Data -->
+        <form id="deliveryForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <!-- Tanggal -->
+            <div>
+                <label for="tanggal" class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
+                <input type="date" id="tanggal" class="form-input rounded-lg" required>
+            </div>
+
+            <!-- Layanan -->
+            <div>
+                <label for="layanan" class="block text-sm font-medium text-gray-700 mb-1">Layanan</label>
+                <select id="layanan" class="form-input rounded-lg" required>
+                    <option value="">Pilih Layanan</option>
+                    <option value="Fastrack">Fastrack</option>
+                    <option value="Maxtrack">Maxtrack</option>
+                    <option value="Line Track">Line Track</option>
+                    <option value="Motortrack">Motortrack</option>
+                </select>
+            </div>
+
+            <!-- AWB -->
+            <div>
+                <label for="awb" class="block text-sm font-medium text-gray-700 mb-1">AWB</label>
+                <input type="text" id="awb" class="form-input rounded-lg" placeholder="Masukkan nomor AWB" required>
+            </div>
+
+            <!-- Nama Pengirim -->
+            <div>
+                <label for="namaPengirim" class="block text-sm font-medium text-gray-700 mb-1">Nama Pengirim</label>
+                <input type="text" id="namaPengirim" class="form-input rounded-lg" placeholder="Masukkan nama pengirim" required>
+            </div>
+
+            <!-- Nomor Pengirim -->
+            <div>
+                <label for="nomorPengirim" class="block text-sm font-medium text-gray-700 mb-1">Nomor Pengirim</label>
+                <input type="tel" id="nomorPengirim" class="form-input rounded-lg" placeholder="Masukkan nomor pengirim (cth: 0812...)" required>
+            </div>
+
+            <!-- Nama Penerima -->
+            <div>
+                <label for="namaPenerima" class="block text-sm font-medium text-gray-700 mb-1">Nama Penerima</label>
+                <input type="text" id="namaPenerima" class="form-input rounded-lg" placeholder="Masukkan nama penerima" required>
+            </div>
+
+            <!-- Nomor Penerima -->
+            <div>
+                <label for="nomorPenerima" class="block text-sm font-medium text-gray-700 mb-1">Nomor Penerima</label>
+                <input type="tel" id="nomorPenerima" class="form-input rounded-lg" placeholder="Masukkan nomor penerima (cth: 0812...)" required>
+            </div>
+
+            <!-- Koli -->
+            <div>
+                <label for="koli" class="block text-sm font-medium text-gray-700 mb-1">Koli</label>
+                <input type="number" id="koli" class="form-input rounded-lg" placeholder="Jumlah koli" min="0" required>
+            </div>
+
+            <!-- Berat -->
+            <div>
+                <label for="berat" class="block text-sm font-medium text-gray-700 mb-1">Berat (kg)</label>
+                <input type="number" id="berat" class="form-input rounded-lg" placeholder="Berat dalam kg" step="0.01" min="0" required>
+            </div>
+
+            <!-- Ongkir -->
+            <div>
+                <label for="ongkir" class="block text-sm font-medium text-gray-700 mb-1">Ongkir (Rp)</label>
+                <input type="number" id="ongkir" class="form-input rounded-lg" placeholder="Biaya ongkir" min="0" value="0" required>
+            </div>
+
+            <!-- Diskon -->
+            <div>
+                <label for="diskon" class="block text-sm font-medium text-gray-700 mb-1">Diskon (%)</label>
+                <input type="number" id="diskon" class="form-input rounded-lg" placeholder="Persentase diskon" min="0" max="100" value="0">
+            </div>
+
+            <!-- Potongan (Otomatis) -->
+            <div>
+                <label for="potongan" class="block text-sm font-medium text-gray-700 mb-1">Potongan (Rp)</label>
+                <input type="number" id="potongan" class="form-input rounded-lg bg-gray-100 cursor-not-allowed" placeholder="Otomatis terisi" min="0" readonly>
+            </div>
+
+            <!-- Asuransi -->
+            <div>
+                <label for="asuransi" class="block text-sm font-medium text-gray-700 mb-1">Asuransi (Rp)</label>
+                <input type="number" id="asuransi" class="form-input rounded-lg" placeholder="Biaya asuransi" min="0" value="0">
+            </div>
+
+            <!-- Komisi (Otomatis) -->
+            <div>
+                <label for="komisi" class="block text-sm font-medium text-gray-700 mb-1">Komisi (Rp)</label>
+                <input type="number" id="komisi" class="form-input rounded-lg bg-gray-100 cursor-not-allowed" placeholder="Otomatis terisi" min="0" readonly>
+            </div>
+
+            <!-- Bayar (Otomatis) -->
+            <div>
+                <label for="bayar" class="block text-sm font-medium text-gray-700 mb-1">Bayar (Rp)</label>
+                <input type="number" id="bayar" class="form-input rounded-lg bg-gray-100 cursor-not-allowed" placeholder="Otomatis terisi" min="0" readonly required>
+            </div>
+
+            <div class="md:col-span-2 flex justify-center gap-4">
+                <button type="submit" class="btn btn-primary rounded-lg">Tambah Data</button>
+                <button type="button" id="downloadCsv" class="btn btn-secondary rounded-lg">Unduh CSV</button>
+            </div>
+        </form>
+
+        ---
+
+        <!-- Dashboard Section -->
+        <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">Dashboard Data Pengiriman</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+            <div class="bg-blue-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+                <p class="text-sm font-medium text-blue-700">Total Ongkir</p>
+                <p id="totalOngkir" class="text-2xl font-bold text-blue-900 mt-2">Rp 0</p>
+            </div>
+            <div class="bg-green-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+                <p class="text-sm font-medium text-green-700">Total Potongan</p>
+                <p id="totalPotongan" class="text-2xl font-bold text-green-900 mt-2">Rp 0</p>
+            </div>
+            <div class="bg-yellow-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+                <p class="text-sm font-medium text-yellow-700">Total Asuransi</p>
+                <p id="totalAsuransi" class="text-2xl font-bold text-yellow-900 mt-2">Rp 0</p>
+            </div>
+            <div class="bg-red-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+                <p class="text-sm font-medium text-red-700">Total Komisi</p>
+                <p id="totalKomisi" class="text-2xl font-bold text-red-900 mt-2">Rp 0</p>
+            </div>
+            <div class="bg-purple-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+                <p class="text-sm font-medium text-purple-700">Total Bayar</p>
+                <p id="totalBayar" class="text-2xl font-bold text-purple-900 mt-2">Rp 0</p>
+            </div>
+        </div>
+
+        ---
+
+        <!-- Tabel Data -->
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Detail Data Pengiriman</h2>
+        <div class="overflow-x-auto rounded-lg shadow-md">
+            <table class="min-w-full bg-white rounded-lg" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Layanan</th>
+                        <th>AWB</th>
+                        <th>Nama Pengirim</th>
+                        <th>Nomor Pengirim</th>
+                        <th>Nama Penerima</th>
+                        <th>Nomor Penerima</th>
+                        <th>Koli</th>
+                        <th>Berat</th>
+                        <th>Ongkir</th>
+                        <th>Diskon (%)</th>
+                        <th>Potongan</th>
+                        <th>Asuransi</th>
+                        <th>Komisi</th>
+                        <th>Bayar</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data akan ditambahkan di sini oleh JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Custom Modal for Alerts -->
+        <div id="customAlert" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
+                <p id="alertMessage" class="text-lg font-semibold text-gray-800 mb-4"></p>
+                <button id="closeAlert" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Data array to store all entries
+        let deliveryData = [];
+
+        // Get elements
+        const deliveryForm = document.getElementById('deliveryForm');
+        const dataTableBody = document.querySelector('#dataTable tbody');
+        const downloadCsvBtn = document.getElementById('downloadCsv');
+
+        const layananInput = document.getElementById('layanan'); // New: Get layanan input
+        const ongkirInput = document.getElementById('ongkir');
+        const asuransiInput = document.getElementById('asuransi');
+        const diskonInput = document.getElementById('diskon');
+        const potonganInput = document.getElementById('potongan');
+        const komisiInput = document.getElementById('komisi'); // New: Get komisi input
+        const bayarInput = document.getElementById('bayar');
+
+        const totalOngkirEl = document.getElementById('totalOngkir');
+        const totalPotonganEl = document.getElementById('totalPotongan');
+        const totalAsuransiEl = document.getElementById('totalAsuransi');
+        const totalKomisiEl = document.getElementById('totalKomisi'); // New: Get total komisi element
+        const totalBayarEl = document.getElementById('totalBayar');
+
+        const customAlert = document.getElementById('customAlert');
+        const alertMessage = document.getElementById('alertMessage');
+        const closeAlert = document.getElementById('closeAlert');
+
+        // Function to show custom alert
+        function showAlert(message) {
+            alertMessage.textContent = message;
+            customAlert.classList.remove('hidden');
+        }
+
+        // Function to hide custom alert
+        closeAlert.addEventListener('click', () => {
+            customAlert.classList.add('hidden');
+        });
+
+        // Function to calculate 'Potongan', 'Komisi', and 'Bayar' for the form
+        function calculateFormAmounts() {
+            const layanan = layananInput.value; // Get selected layanan
+            const ongkir = parseFloat(ongkirInput.value) || 0;
+            const asuransi = parseFloat(asuransiInput.value) || 0;
+            const diskonPercent = parseFloat(diskonInput.value) || 0;
+
+            const diskonAmount = ongkir * (diskonPercent / 100);
+            potonganInput.value = diskonAmount.toFixed(2); // Set Potongan
+
+            let komisiAmount = 0;
+            if (layanan === 'Fastrack' || layanan === 'Motortrack') {
+                komisiAmount = ongkir * 0.40; // 40% of Ongkir
+            } else if (layanan === 'Maxtrack' || layanan === 'Line Track') {
+                komisiAmount = ongkir * 0.20; // 20% of Ongkir
+            }
+            komisiInput.value = komisiAmount.toFixed(2); // Set Komisi
+
+            const totalBayar = ongkir + asuransi - diskonAmount;
+            bayarInput.value = totalBayar.toFixed(2); // Set Bayar
+        }
+
+        // Add event listeners for form input changes to trigger calculation
+        layananInput.addEventListener('change', calculateFormAmounts); // New: Listen for layanan change
+        ongkirInput.addEventListener('input', calculateFormAmounts);
+        asuransiInput.addEventListener('input', calculateFormAmounts);
+        diskonInput.addEventListener('input', calculateFormAmounts);
+
+        // Initial calculation on page load
+        calculateFormAmounts();
+
+        // Function to update the dashboard totals
+        function updateDashboard() {
+            let sumOngkir = 0;
+            let sumPotongan = 0;
+            let sumAsuransi = 0;
+            let sumKomisi = 0; // New: Initialize sum for Komisi
+            let sumBayar = 0;
+
+            deliveryData.forEach(data => {
+                sumOngkir += data.ongkir;
+                sumPotongan += data.potongan;
+                sumAsuransi += data.asuransi;
+                sumKomisi += data.komisi; // Add Komisi to sum
+                sumBayar += data.bayar;
+            });
+
+            totalOngkirEl.textContent = 'Rp ' + sumOngkir.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            totalPotonganEl.textContent = 'Rp ' + sumPotongan.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            totalAsuransiEl.textContent = 'Rp ' + sumAsuransi.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            totalKomisiEl.textContent = 'Rp ' + sumKomisi.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); // Update Komisi dashboard
+            totalBayarEl.textContent = 'Rp ' + sumBayar.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Function to render data to the table
+        function renderTable() {
+            dataTableBody.innerHTML = ''; // Clear existing rows
+            deliveryData.forEach((data, index) => {
+                const row = dataTableBody.insertRow();
+                // Ensure the order of cells matches the table headers
+                const orderedData = [
+                    data.tanggal, data.layanan, data.awb, data.namaPengirim, data.nomorPengirim,
+                    data.namaPenerima, data.nomorPenerima, data.koli, data.berat, data.ongkir,
+                    data.diskon, data.potongan, data.asuransi, data.komisi, data.bayar // New: Add komisi
+                ];
+
+                orderedData.forEach(text => {
+                    const cell = row.insertCell();
+                    // Format numbers to IDR locale, ensure all numbers are formatted consistently
+                    if (typeof text === 'number') {
+                        cell.textContent = text.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    } else {
+                        cell.textContent = text;
+                    }
+                });
+
+                // Add delete button
+                const actionCell = row.insertCell();
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Hapus';
+                deleteButton.classList.add('bg-red-500', 'hover:bg-red-700', 'text-white', 'font-bold', 'py-1', 'px-3', 'rounded', 'text-sm');
+                deleteButton.onclick = () => deleteRow(index);
+                actionCell.appendChild(deleteButton);
+            });
+            updateDashboard(); // Update dashboard after rendering table
+        }
+
+        // Function to delete a row
+        function deleteRow(index) {
+            deliveryData.splice(index, 1); // Remove the item from the array
+            renderTable(); // Re-render the table and update dashboard
+        }
+
+        // Handle form submission
+        deliveryForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form values
+            const tanggal = document.getElementById('tanggal').value;
+            const layanan = document.getElementById('layanan').value;
+            const awb = document.getElementById('awb').value;
+            const namaPengirim = document.getElementById('namaPengirim').value;
+            const nomorPengirim = document.getElementById('nomorPengirim').value;
+            const namaPenerima = document.getElementById('namaPenerima').value;
+            const nomorPenerima = document.getElementById('nomorPenerima').value;
+            const koli = parseFloat(document.getElementById('koli').value);
+            const berat = parseFloat(document.getElementById('berat').value);
+            const ongkir = parseFloat(document.getElementById('ongkir').value);
+            const diskon = parseFloat(document.getElementById('diskon').value) || 0; // Diskon as percentage
+            const potongan = parseFloat(document.getElementById('potongan').value); // Get calculated value
+            const asuransi = parseFloat(document.getElementById('asuransi').value) || 0; // Default to 0 if empty
+            const komisi = parseFloat(document.getElementById('komisi').value); // New: Get calculated komisi
+            const bayar = parseFloat(document.getElementById('bayar').value); // Get calculated value
+
+            // Simple validation for number fields and required text fields
+            if (tanggal === "" || layanan === "" || awb === "" || namaPengirim === "" || nomorPengirim === "" || namaPenerima === "" || nomorPenerima === "" ||
+                isNaN(koli) || isNaN(berat) || isNaN(ongkir) || isNaN(diskon) || isNaN(potongan) || isNaN(asuransi) || isNaN(komisi) || isNaN(bayar)) { // New: Validate komisi
+                showAlert('Pastikan semua kolom diisi dengan benar dan kolom angka memiliki nilai yang valid.');
+                return;
+            }
+
+            // Create an object for the new entry
+            const newData = {
+                tanggal,
+                layanan,
+                awb,
+                namaPengirim,
+                nomorPengirim,
+                namaPenerima,
+                nomorPenerima,
+                koli: koli,
+                berat: berat,
+                ongkir: ongkir,
+                diskon: diskon, // Store as percentage
+                potongan: potongan, // Store calculated value
+                asuransi: asuransi,
+                komisi: komisi, // New: Store calculated komisi
+                bayar: bayar // Store calculated value
+            };
+
+            // Add new data to the array
+            deliveryData.push(newData);
+
+            // Re-render the table and update dashboard
+            renderTable();
+
+            // Clear the form fields and reset calculation
+            deliveryForm.reset();
+            calculateFormAmounts(); // Recalculate amounts for the fresh form
+            showAlert('Data berhasil ditambahkan!');
+        });
+
+        // Function to convert data to CSV format
+        function convertToCsv(objArray) {
+            const array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+            let str = '';
+            let row = '';
+
+            // Get headers (manual order for consistency with table)
+            const headers = [
+                'Tanggal', 'Layanan', 'AWB', 'Nama Pengirim', 'Nomor Pengirim',
+                'Nama Penerima', 'Nomor Penerima', 'Koli', 'Berat', 'Ongkir',
+                'Diskon (%)', 'Potongan', 'Asuransi', 'Komisi', 'Bayar' // New: Add Komisi header
+            ];
+            row = headers.map(header => `"${header}"`).join(','); // Enclose headers in quotes
+            str += row + '\r\n'; // Add newline
+
+            // Get data rows
+            for (let i = 0; i < array.length; i++) {
+                let line = '';
+                // Ensure data is in the same order as headers
+                const dataRow = [
+                    array[i].tanggal, array[i].layanan, array[i].awb, array[i].namaPengirim, array[i].nomorPengirim,
+                    array[i].namaPenerima, array[i].nomorPenerima, array[i].koli, array[i].berat, array[i].ongkir,
+                    array[i].diskon, array[i].potongan, array[i].asuransi, array[i].komisi, array[i].bayar // New: Add komisi data
+                ];
+
+                line = dataRow.map(value => {
+                    // Convert numbers to fixed 2 decimal places for CSV, without locale commas
+                    if (typeof value === 'number') {
+                        return value.toFixed(2);
+                    }
+                    // Enclose string values with commas in double quotes
+                    if (typeof value === 'string' && value.includes(',')) {
+                        return `"${value}"`;
+                    }
+                    return value;
+                }).join(',');
+                str += line + '\r\n';
+            }
+            return str;
+        }
+
+        // Handle CSV download
+        downloadCsvBtn.addEventListener('click', function() {
+            if (deliveryData.length === 0) {
+                showAlert('Tidak ada data untuk diunduh. Silakan tambahkan data terlebih dahulu.');
+                return;
+            }
+
+            const csvContent = convertToCsv(deliveryData);
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'data_pengiriman.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showAlert('File CSV berhasil diunduh!');
+        });
+
+        // Initialize table and dashboard on load
+        renderTable();
+        updateDashboard();
+    </script>
+</body>
+</html>

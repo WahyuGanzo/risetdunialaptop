@@ -119,7 +119,7 @@
         const messageBox = document.getElementById('messageBox');
 
         // Fungsi untuk menampilkan pesan di messageBox
-        function displayMessage(text, type) { // Parameter 'button' dihapus
+        function displayMessage(text, type) {
             messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'border-red-400', 'bg-green-100', 'text-green-700', 'border-green-400', 'bg-blue-100', 'text-blue-700', 'border-blue-400');
             messageBox.innerHTML = ''; // Bersihkan konten sebelumnya
             
@@ -128,7 +128,7 @@
                 messageBox.classList.add('bg-green-100', 'text-green-700', 'border-green-400', 'border');
             } else if (type === 'error') {
                 messageBox.classList.add('bg-red-100', 'text-red-700', 'border-red-400', 'border');
-            } else if (type === 'info') { // 'info' type tetap ada jika sewaktu-waktu dibutuhkan
+            } else if (type === 'info') {
                 messageBox.classList.add('bg-blue-100', 'text-blue-700', 'border-blue-400', 'border');
             }
 
@@ -145,8 +145,6 @@
             }, 50);
         }
 
-        // Fungsi untuk memanggil Gemini API telah dihapus
-
         // Event listener untuk submit form
         loginForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -154,15 +152,23 @@
             const usernameInput = document.getElementById('username').value;
             const passwordInput = document.getElementById('password').value;
 
-            const correctUsername = "aderahman123";
-            const correctPassword = "aderahman123";
+            const correctPassword = "aderahman123"; // Kata sandi yang sama untuk kedua username
 
-            if (usernameInput === correctUsername && passwordInput === correctPassword) {
+            if (usernameInput === "db1" && passwordInput === correctPassword) {
                 displayMessage('Login berhasil! Mengarahkan ke dashboard...', 'success');
-                // Alihkan ke dashboard.html setelah 1 detik (untuk memberi waktu pesan terlihat)
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
-                }, 1000); // 1000 milidetik = 1 detik
+                }, 1000);
+            } else if (usernameInput === "db2" && passwordInput === correctPassword) {
+                displayMessage('Login berhasil! Mengarahkan ke infografis...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'infografis.html';
+                }, 1000);
+            } else if (usernameInput === "jntcargo" && passwordInput === correctPassword) {
+                displayMessage('Login berhasil! Mengarahkan ke infografis...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'jntcargo.html';
+                }, 1000);
             } else {
                 displayMessage('Nama pengguna atau kata sandi salah. Silakan coba lagi.', 'error');
             }

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografis: Tren Pasar PC & Laptop Indonesia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Brilliant Blues -->
+    <!-- Narrative Plan: Infografis ini disusun sebagai cerita visual yang mengalir dari gambaran besar ke detail spesifik. Dimulai dengan data utama (Total Pasar & Pertumbuhan) untuk menarik perhatian. Kemudian, menyelam ke 'Siapa' (Demografi Konsumen) dan 'Mengapa' (Motivasi Pembelian), yang merupakan inti dari perilaku konsumen. Setelah itu, alur berlanjut ke 'Di Mana' (Platform Belanja) untuk menunjukkan kanal penjualan, dan diakhiri dengan 'Apa' (Tren Produk) untuk melihat fitur yang diminati. Struktur naratif ini dirancang untuk memandu pengguna secara logis melalui temuan laporan, dari pasar secara umum hingga preferensi produk, sehingga mudah dicerna dalam satu halaman. -->
+    <!-- Visualization & Content Choices: Data Point: Pertumbuhan Pasar -> Goal: Compare -> Viz: Bar Chart -> Justification: Efektif membandingkan pertumbuhan positif konsumen vs. negatif komersial. (Chart.js/Canvas). Data Point: Pangsa Pasar Merek -> Goal: Compare -> Viz: Donut Chart -> Justification: Menampilkan proporsi masing-masing merek dengan jelas. (Chart.js/Canvas). Data Point: Segmentasi Konsumen -> Goal: Organize -> Viz: HTML/CSS Flowchart -> Justification: Memvisualisasikan dua profil berbeda secara berdampingan tanpa SVG/Mermaid. (HTML/CSS). Data Point: Faktor Pendorong -> Goal: Compare -> Viz: Horizontal Bar Chart -> Justification: Memberi peringkat yang jelas pada faktor-faktor pendorong. (Chart.js/Canvas). Data Point: Tren Fitur -> Goal: Inform -> Viz: Icon Cards -> Justification: Menyajikan fitur utama secara visual dan ringkas menggunakan Unicode. (HTML/CSS). Semua pilihan ini dibuat untuk memaksimalkan kejelasan dan keterlibatan visual tanpa menggunakan SVG atau Mermaid JS. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f9ff; /* sky-50 */
+            color: #051923; /* Palette Darkest */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .hero-stat-value {
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            line-height: 1;
+        }
+        .flowchart-line {
+            width: 2px;
+            background-color: #0582CA;
+            flex-grow: 1;
+        }
+        .flowchart-box {
+            border: 2px solid #006494;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <main class="container mx-auto px-4 md:px-8 py-12">
+
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-[#003554] mb-4">Anatomi Pasar PC Indonesia 2024</h1>
+            <p class="text-lg text-[#006494] max-w-3xl mx-auto">Sebuah tinjauan visual mendalam tentang tren, demografi, dan motivasi yang membentuk perilaku konsumen PC & laptop di Indonesia.</p>
+        </header>
+
+        <section id="market-overview" class="mb-20">
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center text-center">
+                <div class="bg-white rounded-lg shadow-xl p-8">
+                    <h2 class="text-2xl font-bold text-[#003554] mb-2">Total Pengiriman PC 2024</h2>
+                    <p class="hero-stat-value font-extrabold text-[#00A6FB]">4,1 jt</p>
+                    <p class="text-xl font-semibold text-[#0582CA]">unit</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-xl p-8">
+                    <h2 class="text-2xl font-bold text-[#003554] mb-2">Pertumbuhan Tahunan (YoY)</h2>
+                    <p class="hero-stat-value font-extrabold text-[#00A6FB]">+8,8%</p>
+                    <p class="text-xl font-semibold text-[#0582CA]">didominasi segmen konsumen</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="market-dynamics" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-[#003554] mb-4">Dinamika Pertumbuhan & Persaingan</h2>
+            <p class="text-center text-[#006494] max-w-2xl mx-auto mb-12">Segmen konsumen menjadi mesin utama pertumbuhan pasar, sementara arena persaingan diisi oleh pemain global dan lokal yang kuat.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="font-bold text-xl text-center mb-4">Pertumbuhan per Segmen (YoY 2024)</h3>
+                    <div class="chart-container">
+                        <canvas id="growthBySegmentChart"></canvas>
+                    </div>
+                    <p class="text-sm text-center mt-4 text-[#006494]">Pertumbuhan konsumen (+16,7%) mengimbangi penurunan segmen komersial (-7,5%).</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="font-bold text-xl text-center mb-4">Pangsa Pasar Merek PC Teratas 2024</h3>
+                    <div class="chart-container">
+                        <canvas id="marketShareChart"></canvas>
+                    </div>
+                    <p class="text-sm text-center mt-4 text-[#006494]">Asus memimpin pasar, sementara merek lokal Axioo menunjukkan eksistensi yang kuat.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="consumer-profile" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-[#003554] mb-4">Wajah Konsumen Indonesia</h2>
+             <p class="text-center text-[#006494] max-w-2xl mx-auto mb-12">Pasar didominasi oleh generasi muda yang terkonsentrasi di kota-kota besar, dengan perilaku belanja yang unik antar gender.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="font-bold text-xl text-center mb-4">Komposisi Usia Pembeli</h3>
+                    <div class="chart-container" style="height: 280px; max-height: 280px;">
+                        <canvas id="ageDemographicsChart"></canvas>
+                    </div>
+                     <p class="text-sm text-center mt-4 text-[#006494]">80% pembeli online berusia di bawah 35 tahun (Gen Z & Milenial).</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="font-bold text-xl text-center mb-4">Pusat Transaksi (Nilai)</h3>
+                     <div class="chart-container" style="height: 280px; max-height: 280px;">
+                        <canvas id="locationDemographicsChart"></canvas>
+                    </div>
+                     <p class="text-sm text-center mt-4 text-[#006494]">67% nilai transaksi berasal dari kota-kota Tier 1 di Pulau Jawa.</p>
+                </div>
+                 <div class="bg-white rounded-lg shadow-lg p-6 text-center flex flex-col justify-center">
+                    <h3 class="font-bold text-xl mb-4">Paradoks Gender</h3>
+                    <div class="text-5xl font-extrabold text-[#00A6FB] mb-2">46%</div>
+                    <p class="text-lg font-semibold text-[#0582CA]">lebih tinggi</p>
+                    <p class="mt-4 text-[#006494]">Pengeluaran konsumen perempuan untuk komputer & aksesoris dibandingkan laki-laki, meskipun laki-laki lebih sering bertransaksi.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="consumer-segments" class="mb-20">
+             <h2 class="text-3xl font-bold text-center text-[#003554] mb-4">Dua Persona Utama Pembeli</h2>
+             <p class="text-center text-[#006494] max-w-2xl mx-auto mb-12">Di balik angka, terdapat dua tipe konsumen dengan motivasi yang sangat berbeda. Memahami mereka adalah kunci untuk memenangkan pasar.</p>
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex flex-col items-center">
+                    <div class="flowchart-box rounded-lg bg-[#e0f2fe] p-4 text-center mb-4">
+                        <h4 class="font-bold text-lg text-[#003554]">Konsumen Berpendapatan Terbatas & Dipengaruhi Tren</h4>
+                    </div>
+                    <div class="w-full flex justify-center h-16">
+                        <div class="flowchart-line"></div>
+                    </div>
+                    <div class="w-full flex justify-around items-start">
+                        <div class="w-1/2 h-16 border-t-2 border-l-2 border-[#0582CA] rounded-tl-lg"></div>
+                        <div class="w-1/2 h-16 border-t-2 border-r-2 border-[#0582CA] rounded-tr-lg"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                        <div class="flowchart-box rounded-lg p-6 text-center bg-white">
+                            <h4 class="font-bold text-xl text-[#0582CA] mb-2">Techno-Strivers</h4>
+                            <p class="text-sm font-semibold text-[#006494] mb-3">MOTIVASI: KEMAJUAN KARIR</p>
+                            <ul class="text-sm text-left list-disc list-inside text-[#051923] space-y-1">
+                                <li>Percaya teknologi untuk sukses</li>
+                                <li>Mencari performa & produktivitas</li>
+                                <li>Pengguna PC & Internet mayoritas</li>
+                            </ul>
+                        </div>
+                        <div class="flowchart-box rounded-lg p-6 text-center bg-white">
+                            <h4 class="font-bold text-xl text-[#0582CA] mb-2">Gadget Grabbers</h4>
+                             <p class="text-sm font-semibold text-[#006494] mb-3">MOTIVASI: HIBURAN</p>
+                             <ul class="text-sm text-left list-disc list-inside text-[#051923] space-y-1">
+                                <li>Menginginkan teknologi tinggi</li>
+                                <li>Fokus pada multimedia & gaming</li>
+                                <li>Sebagian kecil punya PC/Internet</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="purchase-drivers" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-[#003554] mb-4">Apa yang Mendorong Pembelian?</h2>
+            <p class="text-center text-[#006494] max-w-2xl mx-auto mb-12">Keputusan pembelian dibentuk oleh kombinasi fitur, harga, dan citra merek, dengan tren teknologi baru seperti AI menjadi pendorong utama.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-3 bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="font-bold text-xl text-center mb-4">Faktor Penentu Niat Beli</h3>
+                    <div class="chart-container">
+                        <canvas id="purchaseDriversChart"></canvas>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                        <div class="text-5xl mb-2">🚀</div>
+                        <h4 class="font-bold text-lg text-[#003554]">Dorongan Produktivitas</h4>
+                        <p class="text-sm text-[#006494]">Kebutuhan WFH & belajar menggeser prioritas ke perangkat penunjang produktivitas.</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                        <div class="text-5xl mb-2">🧠</div>
+                        <h4 class="font-bold text-lg text-[#003554]">Revolusi AI PC</h4>
+                        <p class="text-sm text-[#006494]">Integrasi AI menjadi daya tarik utama untuk pengalaman yang lebih cerdas dan efisien.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="shopping-platforms" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-[#003554] mb-4">Arena Belanja Pilihan</h2>
+            <p class="text-center text-[#006494] max-w-2xl mx-auto mb-12">Dunia digital mendominasi, namun toko fisik tetap relevan. Fleksibilitas pembayaran menjadi kunci transaksi.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="font-bold text-xl text-center mb-4">Distribusi Kanal Belanja</h3>
+                    <div class="chart-container" style="height: 280px; max-height: 280px;">
+                        <canvas id="shoppingChannelChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col">
+                    <h3 class="font-bold text-xl text-center mb-4">E-commerce Favorit</h3>
+                    <div class="flex-grow flex flex-col justify-center items-center space-y-4">
+                        <img src="https://placehold.co/150x50/FF6F61/FFFFFF?text=Shopee" alt="Logo Shopee" class="h-12 w-auto">
+                        <img src="https://placehold.co/150x50/00AA5B/FFFFFF?text=Tokopedia" alt="Logo Tokopedia" class="h-12 w-auto">
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="font-bold text-xl text-center mb-4">Metode Pembayaran Digital</h3>
+                    <div class="chart-container" style="height: 280px; max-height: 280px;">
+                        <canvas id="paymentMethodChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="product-trends" class="mb-16">
+            <h2 class="text-3xl font-bold text-center text-[#003554] mb-4">Fitur Produk yang Paling Dicari</h2>
+            <p class="text-center text-[#006494] max-w-2xl mx-auto mb-12">Konsumen modern menginginkan paket lengkap: inovasi cerdas, desain portabel, dan performa yang tak tertandingi.</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl hover:scale-105 transition-transform duration-300">
+                    <div class="text-5xl mb-3">🧠</div>
+                    <h4 class="font-bold text-lg text-[#003554]">PC Berbasis AI</h4>
+                    <p class="text-sm text-[#006494]">NPU khusus untuk komputasi cerdas.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl hover:scale-105 transition-transform duration-300">
+                    <div class="text-5xl mb-3">🍃</div>
+                    <h4 class="font-bold text-lg text-[#003554]">Tipis & Ringan</h4>
+                    <p class="text-sm text-[#006494]">Desain ramping untuk mobilitas tinggi.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl hover:scale-105 transition-transform duration-300">
+                    <div class="text-5xl mb-3">🎨</div>
+                    <h4 class="font-bold text-lg text-[#003554]">Layar OLED</h4>
+                    <p class="text-sm text-[#006494]">Kualitas visual superior dan warna akurat.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl hover:scale-105 transition-transform duration-300">
+                    <div class="text-5xl mb-3">⚡</div>
+                    <h4 class="font-bold text-lg text-[#003554]">Performa Tinggi</h4>
+                    <p class="text-sm text-[#006494]">RAM 16GB+ dan SSD menjadi standar.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center pt-12 border-t-2 border-[#00A6FB]/50">
+            <p class="text-sm text-[#006494]">Infografis ini dibuat berdasarkan analisis Laporan Tren dan Perilaku Konsumen Perangkat Komputer di Indonesia. Data per 2024.</p>
+        </footer>
+
+    </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const palette = {
+            blue: '#00A6FB',
+            navy: '#0582CA',
+            darkNavy: '#006494',
+            darkestNavy: '#003554',
+            black: '#051923',
+            slate: '#64748b'
+        };
+
+        const chartLabelColor = palette.darkNavy;
+        const chartGridColor = '#e0f2fe';
+
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = chartLabelColor;
+        Chart.defaults.plugins.legend.position = 'bottom';
+        Chart.defaults.plugins.legend.labels.boxWidth = 12;
+        Chart.defaults.plugins.legend.labels.padding = 20;
+        
+        const tooltipConfig = {
+            plugins: {
+                tooltip: {
+                    backgroundColor: 'rgba(5, 25, 35, 0.8)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    boxPadding: 4,
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        const processLongLabels = (labels) => {
+            return labels.map(label => {
+                if (typeof label === 'string' && label.length > 16) {
+                    const words = label.split(' ');
+                    const lines = [];
+                    let currentLine = '';
+                    words.forEach(word => {
+                        if ((currentLine + word).length > 16) {
+                            lines.push(currentLine.trim());
+                            currentLine = word + ' ';
+                        } else {
+                            currentLine += word + ' ';
+                        }
+                    });
+                    lines.push(currentLine.trim());
+                    return lines;
+                }
+                return label;
+            });
+        };
+        
+        new Chart(document.getElementById('growthBySegmentChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Konsumen', 'Komersial'],
+                datasets: [{
+                    label: 'Pertumbuhan YoY 2024',
+                    data: [16.7, -7.5],
+                    backgroundColor: [palette.blue, palette.slate],
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                ...tooltipConfig,
+                plugins: { ...tooltipConfig.plugins, legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: chartGridColor },
+                        ticks: { callback: value => value + '%' }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('marketShareChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Asus', 'Lenovo', 'Lainnya', 'HP', 'Acer', 'Axioo'],
+                datasets: [{
+                    data: [23.6, 21.5, 20.9, 15.6, 14.1, 4.3],
+                    backgroundColor: [palette.blue, palette.navy, palette.slate, palette.darkNavy, palette.darkestNavy, '#fb923c'],
+                    borderColor: '#f0f9ff',
+                    borderWidth: 2,
+                    hoverOffset: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '60%',
+                ...tooltipConfig
+            }
+        });
+
+        const commonDoughnutOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '50%',
+            ...tooltipConfig,
+            plugins: {
+                ...tooltipConfig.plugins,
+                legend: { position: 'right', labels: { boxWidth: 10 } }
+            }
+        };
+
+        new Chart(document.getElementById('ageDemographicsChart'), {
+            type: 'doughnut',
+            data: {
+                labels: processLongLabels(['Gen Z & Milenial (<35 thn)', 'Gen X (36-45 thn)', 'Lainnya']),
+                datasets: [{
+                    data: [80, 16, 4],
+                    backgroundColor: [palette.blue, palette.navy, palette.slate],
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                }]
+            },
+            options: commonDoughnutOptions
+        });
+
+        new Chart(document.getElementById('locationDemographicsChart'), {
+            type: 'doughnut',
+            data: {
+                labels: processLongLabels(['Kota Tier 1 (Jawa)', 'Luar Kota Tier 1 (Jawa)', 'Luar Jawa']),
+                datasets: [{
+                    data: [67, 15, 18],
+                    backgroundColor: [palette.blue, palette.darkNavy, palette.slate],
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                }]
+            },
+            options: commonDoughnutOptions
+        });
+        
+        new Chart(document.getElementById('purchaseDriversChart'), {
+            type: 'bar',
+            data: {
+                labels: processLongLabels(['Fitur Produk', 'Harga', 'Citra Merek', 'Promosi', 'Layanan Purna Jual']),
+                datasets: [{
+                    data: [90, 88, 85, 75, 70],
+                    backgroundColor: palette.blue,
+                    borderRadius: 4,
+                    barPercentage: 0.7
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                ...tooltipConfig,
+                plugins: { ...tooltipConfig.plugins, legend: { display: false } },
+                scales: {
+                    x: { beginAtZero: true, grid: { color: chartGridColor } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        const pieOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            ...tooltipConfig,
+            plugins: {
+                 ...tooltipConfig.plugins,
+                legend: { position: 'right', labels: { boxWidth: 10 } }
+            }
+        };
+
+        new Chart(document.getElementById('shoppingChannelChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Online', 'Offline'],
+                datasets: [{
+                    data: [65, 35],
+                    backgroundColor: [palette.blue, palette.slate],
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                }]
+            },
+            options: pieOptions
+        });
+        
+        new Chart(document.getElementById('paymentMethodChart'), {
+            type: 'pie',
+            data: {
+                labels: processLongLabels(['E-Wallet', 'Transfer Bank', 'PayLater']),
+                datasets: [{
+                    data: [65, 51, 27],
+                    backgroundColor: [palette.blue, palette.navy, palette.darkNavy],
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                }]
+            },
+            options: pieOptions
+        });
+    });
+    </script>
+</body>
+</html>
